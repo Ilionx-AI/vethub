@@ -2,6 +2,7 @@
 java = "temurin-25"
 bun = "1.3.0"
 node = "22.20.0"
+opencode = "latest"
 
 [env]
 # Server Configuration
