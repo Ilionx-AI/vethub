@@ -6,14 +6,14 @@
                    logicalFilePath="202508241400-ADD-vet-to-visits.xml">
 
     <changeSet id="202508241400-ADD-vet-to-visits-1" author="ronald.van.butselaar">
-        <comment>Adding vet_id foreign key column to visits table to track which veterinarian performed each visit.</comment>
+        <comment>Adding vet_id foreign key column to visits table to track which veterinarian performed each visit. This is an optional relationship allowing visits without assigned vets.</comment>
         <sql>
             ALTER TABLE visits
-            ADD COLUMN vet_id INTEGER NOT NULL DEFAULT 1;
+            ADD COLUMN vet_id INTEGER;
 
             ALTER TABLE visits
             ADD CONSTRAINT fk_visits_vet_id
-            FOREIGN KEY (vet_id) REFERENCES vets (id);
+            FOREIGN KEY (vet_id) REFERENCES vets (id) ON DELETE SET NULL;
         </sql>
     </changeSet>
 

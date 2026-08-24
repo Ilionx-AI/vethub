@@ -52,4 +52,39 @@ public class PetResponse {
 
     @Schema(description = "The pet's visits")
     private List<VisitSummaryResponse> visits;
+
+    @Schema(
+        description = "Pet's weight in kilograms",
+        example = "5.5",
+        requiredMode = Schema.RequiredMode.NOT_REQUIRED
+    )
+    private Double weight;
+
+    @Schema(
+        description = "Date of the last vaccine administered",
+        example = "2024-08-01",
+        requiredMode = Schema.RequiredMode.NOT_REQUIRED
+    )
+    private LocalDate lastVaccineDate;
+
+    @Schema(
+        description = "Comma-separated list or free text describing any allergies",
+        example = "Chicken, Dairy",
+        requiredMode = Schema.RequiredMode.NOT_REQUIRED
+    )
+    private String allergies;
+
+    @Schema(
+        description = "Comma-separated list or free text describing dietary restrictions",
+        example = "Low fat, No grains",
+        requiredMode = Schema.RequiredMode.NOT_REQUIRED
+    )
+    private String dietaryRestrictions;
+
+    @Schema(
+        description = "Medical notes and relevant medical history",
+        example = "Sensitive stomach, requires regular check-ups",
+        requiredMode = Schema.RequiredMode.NOT_REQUIRED
+    )
+    private String medicalNotes;
 }

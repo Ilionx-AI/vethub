@@ -39,12 +39,22 @@
 		name: string;
 		birthDate: string;
 		typeId: number;
+		weight?: number | null;
+		lastVaccineDate?: string | null;
+		allergies?: string | null;
+		dietaryRestrictions?: string | null;
+		medicalNotes?: string | null;
 	}) {
 		try {
 			const request: UpdatePetRequest = {
 				name: data.name,
 				birthDate: data.birthDate,
-				typeId: data.typeId
+				typeId: data.typeId,
+				weight: data.weight ?? undefined,
+				lastVaccineDate: data.lastVaccineDate ?? undefined,
+				allergies: data.allergies ?? undefined,
+				dietaryRestrictions: data.dietaryRestrictions ?? undefined,
+				medicalNotes: data.medicalNotes ?? undefined
 			};
 
 			await updatePetForOwner(ownerId, petId, request);
@@ -96,6 +106,11 @@
 				name={pet.name}
 				birthDate={pet.birthDate}
 				typeId={pet.type?.id}
+				weight={pet.weight}
+				lastVaccineDate={pet.lastVaccineDate}
+				allergies={pet.allergies}
+				dietaryRestrictions={pet.dietaryRestrictions}
+				medicalNotes={pet.medicalNotes}
 				{petTypes}
 				onSubmit={handleSubmit}
 				submitLabel="Save Changes"

@@ -49,7 +49,7 @@ public class VisitResponse {
 
     @Schema(
         description = "The veterinarian who performed the visit",
-        requiredMode = Schema.RequiredMode.REQUIRED
+        requiredMode = Schema.RequiredMode.NOT_REQUIRED
     )
     private VetResponse vet;
 }

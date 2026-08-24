@@ -27,7 +27,7 @@
 
 	loadVets();
 
-	async function handleSubmit(data: { visitDate: string; description: string; vetId: number }) {
+	async function handleSubmit(data: { visitDate: string; description: string; medicalNotes?: string; vetId?: number }) {
 		try {
 			await createVisitForPet(ownerId, petId, {
 				date: data.visitDate,
@@ -50,16 +50,16 @@
 <div class="container mx-auto max-w-2xl px-4 py-8">
 	<!-- Back button -->
 	<Button variant="ghost" href="/owners/{ownerId}/pets/{petId}" class="mb-6 gap-2">
-		<ArrowLeft class="h-4 w-4" />
-		Back to Pet
+		<ArrowLeft class="h-4 w-4 flex-shrink-0" />
+		<span>Back to Pet</span>
 	</Button>
 
-	<div class="mb-6">
-		<h1 class="text-2xl font-bold">Record New Visit</h1>
-		<p class="text-muted-foreground">Add a new visit record for this pet</p>
+	<div class="mb-6 space-y-2">
+		<h1 class="text-2xl sm:text-3xl font-bold">Record New Visit</h1>
+		<p class="text-muted-foreground text-sm sm:text-base">Add a new visit record for this pet</p>
 	</div>
 
-	<div class="card p-6">
+	<div class="card p-4 sm:p-6">
 		{#if loading}
 			<div class="flex items-center justify-center py-8">
 				<p class="text-muted-foreground">Loading veterinarians...</p>

@@ -2,7 +2,6 @@ package dev.ilionx.workshop.api.visit.service;
 
 import dev.ilionx.workshop.api.pet.model.Pet;
 import dev.ilionx.workshop.api.pet.repository.PetRepository;
-import dev.ilionx.workshop.api.vet.model.Vet;
 import dev.ilionx.workshop.api.vet.repository.VetRepository;
 import dev.ilionx.workshop.api.visit.model.Visit;
 import dev.ilionx.workshop.api.visit.model.request.CreateVisitRequest;
@@ -114,30 +113,25 @@ class VisitServiceTest extends UnitTest {
     @Test
     @DisplayName("Should create visit when valid data provided")
     void shouldCreateVisitWhenValidDataProvided() {
-        // Given: A valid create visit request with an existing pet and vet
+        // Given: A valid create visit request with an existing pet
         final CreateVisitRequest request = new CreateVisitRequest();
         request.setDate(VALID_VISIT_DATE);
         request.setDescription(VALID_VISIT_DESCRIPTION);
-        request.setVetId(1);
         final Pet pet = aValidPet();
-        final Vet vet = aValidVet();
         final Visit savedVisit = aValidVisit();
-        savedVisit.setVet(vet);
         given(petRepository.findById(VALID_PET_ID)).willReturn(Optional.of(pet));
-        given(vetRepository.findById(1)).willReturn(Optional.of(vet));
         given(visitRepository.save(any(Visit.class))).willReturn(savedVisit);
 
         // When: Creating the visit
         final Visit actualVisit = visitService.create(VALID_PET_ID, request);
 
-        // Then: The visit should be saved and returned with correct date, description, pet, and vet
+        // Then: The visit should be saved and returned with correct date, description, and pet
         verify(visitRepository).save(any(Visit.class));
         assertThat(actualVisit, is(notNullValue()));
         assertThat(actualVisit.getId(), is(equalTo(VALID_VISIT_ID)));
         assertThat(actualVisit.getDate(), is(equalTo(VALID_VISIT_DATE)));
         assertThat(actualVisit.getDescription(), is(equalTo(VALID_VISIT_DESCRIPTION)));
         assertThat(actualVisit.getPet().getId(), is(equalTo(VALID_PET_ID)));
-        assertThat(actualVisit.getVet(), is(notNullValue()));
     }
 
     @Test
@@ -147,7 +141,6 @@ class VisitServiceTest extends UnitTest {
         final CreateVisitRequest request = new CreateVisitRequest();
         request.setDate(VALID_VISIT_DATE);
         request.setDescription(VALID_VISIT_DESCRIPTION);
-        request.setVetId(1);
         given(petRepository.findById(NON_EXISTENT_PET_ID)).willReturn(Optional.empty());
 
         // When & Then: Creating visit for non-existent pet should throw DataNotFoundException
@@ -229,15 +222,12 @@ class VisitServiceTest extends UnitTest {
     @Test
     @DisplayName("Should update visit when valid data provided")
     void shouldUpdateVisitWhenValidDataProvided() {
-        // Given: An existing visit in the repository and update request with vet
+        // Given: An existing visit in the repository and update request
         final Visit existingVisit = aValidVisit();
-        final Vet vet = aValidVet();
         final UpdateVisitRequest request = new UpdateVisitRequest();
         request.setDate(VALID_VISIT_DATE.plusDays(1));
         request.setDescription("Updated description");
-        request.setVetId(1);
         given(visitRepository.findById(VALID_VISIT_ID)).willReturn(Optional.of(existingVisit));
-        given(vetRepository.findById(1)).willReturn(Optional.of(vet));
         given(visitRepository.save(any(Visit.class))).willReturn(existingVisit);
 
         // When: Updating the visit
@@ -247,7 +237,6 @@ class VisitServiceTest extends UnitTest {
         verify(visitRepository).save(existingVisit);
         assertThat(existingVisit.getDate(), is(equalTo(VALID_VISIT_DATE.plusDays(1))));
         assertThat(existingVisit.getDescription(), is(equalTo("Updated description")));
-        assertThat(existingVisit.getVet(), is(notNullValue()));
     }
 
     @Test
@@ -257,7 +246,6 @@ class VisitServiceTest extends UnitTest {
         final UpdateVisitRequest request = new UpdateVisitRequest();
         request.setDate(VALID_VISIT_DATE);
         request.setDescription("Updated description");
-        request.setVetId(1);
         given(visitRepository.findById(NON_EXISTENT_VISIT_ID)).willReturn(Optional.empty());
 
         // When & Then: Updating non-existent visit should throw DataNotFoundException
