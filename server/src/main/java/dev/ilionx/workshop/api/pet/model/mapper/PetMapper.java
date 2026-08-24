@@ -5,6 +5,7 @@ import dev.ilionx.workshop.api.pet.model.PetType;
 import dev.ilionx.workshop.api.pet.model.response.PetResponse;
 import dev.ilionx.workshop.api.pet.model.response.PetTypeResponse;
 import dev.ilionx.workshop.api.pet.model.response.VisitSummaryResponse;
+import dev.ilionx.workshop.api.vet.model.mapper.VetMapper;
 import dev.ilionx.workshop.api.visit.model.Visit;
 import io.github.jframe.util.mapper.config.SharedMapperConfig;
 
@@ -12,12 +13,16 @@ import java.util.List;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * MapStruct mapper for converting Pet entities to response DTOs.
  */
 @Mapper(config = SharedMapperConfig.class)
 public abstract class PetMapper {
+
+    @Autowired
+    protected VetMapper vetMapper;
 
     @Mapping(
         source = "owner.id",
@@ -29,5 +34,9 @@ public abstract class PetMapper {
 
     public abstract PetTypeResponse toPetTypeResponse(PetType petType);
 
+    @Mapping(
+        target = "vet",
+        expression = "java(visit.getVet() != null ? vetMapper.toResponse(visit.getVet()) : null)"
+    )
     public abstract VisitSummaryResponse toVisitSummaryResponse(Visit visit);
 }

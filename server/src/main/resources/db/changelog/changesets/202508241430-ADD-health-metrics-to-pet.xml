@@ -1,0 +1,28 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd"
+                   logicalFilePath="202508241430-ADD-health-metrics-to-pet.xml">
+
+    <changeSet id="202508241430-ADD-health-metrics-to-pet-1" author="ronald.van.butselaar">
+        <comment>Adding health metrics columns to pets table for tracking weight, vaccines, allergies, dietary restrictions, and medical notes.</comment>
+        <sql>
+            ALTER TABLE pets
+            ADD COLUMN weight DECIMAL(5,2) NULL;
+
+            ALTER TABLE pets
+            ADD COLUMN last_vaccine_date DATE NULL;
+
+            ALTER TABLE pets
+            ADD COLUMN allergies VARCHAR(500) NULL;
+
+            ALTER TABLE pets
+            ADD COLUMN dietary_restrictions VARCHAR(500) NULL;
+
+            ALTER TABLE pets
+            ADD COLUMN medical_notes CLOB NULL;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
