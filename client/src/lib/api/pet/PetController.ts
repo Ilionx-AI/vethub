@@ -5,6 +5,7 @@
  * Handles HTTP communication only - no business logic.
  */
 import { client } from '$lib/api/client';
+import { SERVER_BASE_URL, API_USERNAME, API_PASSWORD } from '$lib/config/constants';
 import type {
 	PetResponse,
 	CreatePetRequest,
@@ -18,6 +19,38 @@ export async function getPets(): Promise<PetResponse[]> {
 	const { data, error } = await client.GET('/v1/pets');
 	if (error) throw error;
 	return data ?? [];
+}
+
+/**
+ * Search pets by name
+ */
+export async function searchPets(name: string): Promise<PetResponse[]> {
+	// Build URL with query parameter since OpenAPI spec doesn't document it
+	const query = name.trim() ? `?name=${encodeURIComponent(name)}` : '';
+	const url = `${SERVER_BASE_URL}/v1/pets${query}`;
+	
+	try {
+		const credentials = `${API_USERNAME}:${API_PASSWORD}`;
+		const authHeader = `Basic ${btoa(credentials)}`;
+		
+		const response = await fetch(url, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json',
+				'Authorization': authHeader
+			}
+		});
+		
+		if (!response.ok) {
+			throw new Error(`Failed to search pets: ${response.statusText}`);
+		}
+		
+		const data = await response.json();
+		return Array.isArray(data) ? data : [];
+	} catch (error) {
+		console.error('Error searching pets:', error);
+		throw error;
+	}
 }
 
 /**
@@ -61,12 +94,13 @@ export async function createPet(request: CreatePetRequest): Promise<PetResponse>
 export async function createPetForOwner(ownerId: number, request: Omit<CreatePetRequest, 'ownerId'>): Promise<PetResponse> {
 	const { data, error } = await client.POST('/v1/owners/{ownerId}/pets', {
 		params: { path: { ownerId } },
-		body: request
+		body: { ...request, ownerId } as CreatePetRequest
 	});
 	if (error) throw error;
 	if (!data) throw new Error('Failed to create pet');
 	return data;
 }
+
 
 /**
  * Update an existing pet
