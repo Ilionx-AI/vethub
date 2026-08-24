@@ -30,12 +30,22 @@
 		name: string;
 		birthDate: string;
 		typeId: number;
+		weight?: number | null;
+		lastVaccineDate?: string | null;
+		allergies?: string | null;
+		dietaryRestrictions?: string | null;
+		medicalNotes?: string | null;
 	}) {
 		try {
 			const pet = await createPetForOwner(ownerId, {
 				name: data.name,
 				birthDate: data.birthDate,
-				typeId: data.typeId
+				typeId: data.typeId,
+				weight: data.weight ?? undefined,
+				lastVaccineDate: data.lastVaccineDate ?? undefined,
+				allergies: data.allergies ?? undefined,
+				dietaryRestrictions: data.dietaryRestrictions ?? undefined,
+				medicalNotes: data.medicalNotes ?? undefined
 			});
 			toast.success('Pet created successfully');
 			goto(`/owners/${ownerId}/pets/${pet.id}`);

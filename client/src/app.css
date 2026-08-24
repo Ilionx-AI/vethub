@@ -381,3 +381,619 @@
 .stagger-3 { animation-delay: 0.15s; }
 .stagger-4 { animation-delay: 0.2s; }
 .stagger-5 { animation-delay: 0.25s; }
+
+/* ============================================================================
+   DARK THEME
+   ============================================================================ */
+
+html.dark {
+  /* Border Radius - Keep consistent */
+  --radius: 0.625rem;
+
+  /* Dark Mode - Inverted colors */
+  --background: hsl(220 13% 15%);
+  --foreground: hsl(220 13% 95%);
+
+  /* Card - Dark with subtle styling */
+  --card: hsl(220 13% 20%);
+  --card-foreground: hsl(220 13% 90%);
+
+  /* Popover */
+  --popover: hsl(220 13% 20%);
+  --popover-foreground: hsl(220 13% 90%);
+
+  /* Primary - Keep ilionx Red but adjusted for contrast */
+  --primary: hsl(344 100% 50%);
+  --primary-foreground: hsl(0 0% 100%);
+
+  /* Secondary - Subtle dark gray */
+  --secondary: hsl(220 13% 30%);
+  --secondary-foreground: hsl(220 13% 85%);
+
+  /* Muted - Light gray for backgrounds */
+  --muted: hsl(220 13% 28%);
+  --muted-foreground: hsl(220 13% 65%);
+
+  /* Accent - Teal, adjusted for dark mode */
+  --accent: hsl(175 70% 50%);
+  --accent-foreground: hsl(0 0% 15%);
+
+  /* Destructive - Error red */
+  --destructive: hsl(0 84% 60%);
+  --destructive-foreground: hsl(0 0% 100%);
+
+  /* Success - Green */
+  --success: hsl(142 76% 45%);
+  --success-foreground: hsl(0 0% 100%);
+
+  /* Warning - Amber */
+  --warning: hsl(38 92% 55%);
+  --warning-foreground: hsl(0 0% 15%);
+
+  /* Borders - Subtle lighter border for dark mode */
+  --border: hsl(220 13% 25%);
+  --input: hsl(220 13% 28%);
+  --ring: hsl(344 100% 50%);
+
+  /* Chart Colors */
+  --chart-1: hsl(344 100% 50%);
+  --chart-2: hsl(175 70% 50%);
+  --chart-3: hsl(45 90% 55%);
+  --chart-4: hsl(220 70% 55%);
+  --chart-5: hsl(280 60% 55%);
+
+  /* Sidebar */
+  --sidebar: hsl(220 13% 18%);
+  --sidebar-foreground: hsl(220 13% 90%);
+  --sidebar-primary: hsl(344 100% 50%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(220 13% 28%);
+  --sidebar-accent-foreground: hsl(220 13% 90%);
+  --sidebar-border: hsl(220 13% 25%);
+  --sidebar-ring: hsl(344 100% 50%);
+}
+
+/* Dark theme card shadows - softer */
+html.dark .card {
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.4), 0 1px 2px -1px rgb(0 0 0 / 0.4);
+}
+
+html.dark .card-hover:hover {
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
+}
+
+/* Dark theme focus ring - use glow effect */
+html.dark .focus-ring:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--primary),
+    0 0 8px 0 rgb(232 0 61 / 0.3);
+}
+
+html.dark .input-base:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--background), 0 0 0 4px var(--primary),
+    0 0 8px 0 rgb(232 0 61 / 0.3);
+}
+
+/* ============================================================================
+   PAW PATROL THEME
+   ============================================================================ */
+
+html.paw-patrol {
+  /* Border Radius - More bubbly/rounded */
+  --radius: 1rem;
+
+  /* Paw Patrol - Bold, playful colors */
+  --background: hsl(200 60% 95%);
+  --foreground: hsl(220 25% 20%);
+
+  /* Card - Gradient background */
+  --card: hsl(0 0% 100%);
+  --card-foreground: hsl(220 25% 20%);
+
+  /* Popover */
+  --popover: hsl(0 0% 100%);
+  --popover-foreground: hsl(220 25% 20%);
+
+  /* Primary - Bold blue (Chase) */
+  --primary: hsl(210 100% 45%);
+  --primary-foreground: hsl(0 0% 100%);
+
+  /* Secondary - Light blue tint */
+  --secondary: hsl(200 60% 90%);
+  --secondary-foreground: hsl(220 25% 20%);
+
+  /* Muted - Soft colors */
+  --muted: hsl(200 60% 88%);
+  --muted-foreground: hsl(220 25% 45%);
+
+  /* Accent - Red (Marshall) */
+  --accent: hsl(0 85% 50%);
+  --accent-foreground: hsl(0 0% 100%);
+
+  /* Destructive - Red */
+  --destructive: hsl(0 84% 60%);
+  --destructive-foreground: hsl(0 0% 100%);
+
+  /* Success - Green */
+  --success: hsl(142 76% 36%);
+  --success-foreground: hsl(0 0% 100%);
+
+  /* Warning / Highlight - Yellow (Badge) */
+  --warning: hsl(45 100% 55%);
+  --warning-foreground: hsl(0 0% 15%);
+
+  /* Borders - Thicker, primary color tint */
+  --border: hsl(210 70% 80%);
+  --input: hsl(200 60% 90%);
+  --ring: hsl(210 100% 45%);
+
+  /* Chart Colors */
+  --chart-1: hsl(210 100% 45%);
+  --chart-2: hsl(0 85% 50%);
+  --chart-3: hsl(45 100% 55%);
+  --chart-4: hsl(120 70% 45%);
+  --chart-5: hsl(280 60% 50%);
+
+  /* Sidebar */
+  --sidebar: hsl(200 60% 93%);
+  --sidebar-foreground: hsl(220 25% 20%);
+  --sidebar-primary: hsl(210 100% 45%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(200 60% 88%);
+  --sidebar-accent-foreground: hsl(220 25% 20%);
+  --sidebar-border: hsl(210 70% 80%);
+  --sidebar-ring: hsl(210 100% 45%);
+
+  /* Font */
+  --font-sans: 'Fredoka', 'Poppins', ui-sans-serif, system-ui, sans-serif;
+}
+
+html.paw-patrol body {
+  background-color: var(--background);
+  background-image:
+    radial-gradient(circle at 12px 10px, hsl(210 100% 45% / 0.12) 0 4px, transparent 5px),
+    radial-gradient(circle at 4px 20px, hsl(0 85% 50% / 0.1) 0 3px, transparent 4px),
+    radial-gradient(circle at 20px 20px, hsl(45 100% 55% / 0.16) 0 3px, transparent 4px),
+    linear-gradient(135deg, hsl(200 60% 95%) 0%, hsl(210 85% 91%) 100%);
+  background-size: 56px 56px, 56px 56px, 56px 56px, auto;
+}
+
+html.paw-patrol header {
+  border-bottom: 4px solid var(--warning);
+  background: linear-gradient(90deg, hsl(210 100% 45% / 0.95), hsl(0 85% 50% / 0.95));
+  box-shadow: 0 4px 0 hsl(45 100% 55% / 0.75), 0 10px 24px rgba(0, 100, 200, 0.16);
+}
+
+html.paw-patrol header a,
+html.paw-patrol header button {
+  color: white;
+}
+
+html.paw-patrol header a:hover,
+html.paw-patrol header button:hover {
+  background-color: hsl(45 100% 55% / 0.25);
+  color: white;
+}
+
+html.paw-patrol header .bg-primary\/10 {
+  background-color: hsl(45 100% 55% / 0.35);
+}
+
+/* Paw Patrol card styles - gradient background and thicker borders */
+html.paw-patrol .card {
+  background:
+    linear-gradient(90deg, var(--primary) 0 14px, transparent 14px),
+    linear-gradient(135deg, var(--card) 0%, hsl(200 60% 92%) 100%);
+  border: 2px solid var(--primary);
+  box-shadow: 0 4px 12px rgba(0, 100, 200, 0.15);
+}
+
+html.paw-patrol .card-hover {
+  background:
+    linear-gradient(90deg, var(--primary) 0 14px, transparent 14px),
+    linear-gradient(135deg, var(--card) 0%, hsl(200 60% 92%) 100%);
+  border: 2px solid var(--primary);
+  box-shadow: 0 4px 12px rgba(0, 100, 200, 0.15);
+}
+
+html.paw-patrol .card-hover:hover {
+  box-shadow: 0 6px 16px rgba(0, 100, 200, 0.2);
+}
+
+/* Paw Patrol button styles */
+html.paw-patrol .btn-primary {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border-radius: var(--radius);
+}
+
+html.paw-patrol .btn-primary:hover {
+  background-color: color-mix(in srgb, var(--primary) 85%, black);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 100, 200, 0.3);
+}
+
+html.paw-patrol h1,
+html.paw-patrol h2,
+html.paw-patrol h3 {
+  text-shadow: 1px 1px 0 hsl(45 100% 55% / 0.4);
+}
+
+html.paw-patrol .badge,
+html.paw-patrol .rounded-full {
+  border: 1px solid hsl(45 100% 55% / 0.6);
+}
+
+/* ============================================================================
+   SYNESTHESIA THEME - Full Sensory Overload
+   ============================================================================ */
+
+/* Synesthesia Animations */
+@keyframes glitch {
+  0% { text-shadow: -2px 0 #ff00ff, 2px 0 #00ffff; }
+  50% { text-shadow: 2px 0 #ffff00, -2px 0 #00ff00; }
+  100% { text-shadow: -2px 0 #ff00ff, 2px 0 #00ffff; }
+}
+
+@keyframes bounce-chaotic {
+  0%, 100% { transform: translateY(0); }
+  25% { transform: translateY(-8px); }
+  50% { transform: translateY(4px); }
+  75% { transform: translateY(-4px); }
+}
+
+@keyframes spin-wild {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pulse-neon {
+  0%, 100% { box-shadow: 0 0 10px var(--primary), 0 0 20px var(--accent); }
+  50% { box-shadow: 0 0 20px var(--primary), 0 0 40px var(--accent); }
+}
+
+@keyframes skew-rotate {
+  0% { transform: skew(-2deg) rotate(0deg); }
+  50% { transform: skew(2deg) rotate(180deg); }
+  100% { transform: skew(-2deg) rotate(360deg); }
+}
+
+@keyframes rainbow-shift {
+  0% { color: hsl(320 100% 55%); }
+  25% { color: hsl(90 100% 50%); }
+  50% { color: hsl(45 100% 50%); }
+  75% { color: hsl(180 100% 50%); }
+  100% { color: hsl(320 100% 55%); }
+}
+
+@keyframes jitter {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-2px, 2px); }
+  50% { transform: translate(2px, -2px); }
+  75% { transform: translate(-2px, -2px); }
+  100% { transform: translate(0, 0); }
+}
+
+@keyframes background-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+html.synesthesia {
+  /* Border Radius - Sharp, jarring */
+  --radius: 0.25rem;
+
+  /* Synesthesia - Deep purple and acid cyan */
+  --background: hsl(280 50% 15%);
+  --foreground: hsl(180 100% 50%);
+
+  /* Card - Dark magenta */
+  --card: hsl(300 60% 25%);
+  --card-foreground: hsl(180 100% 50%);
+
+  /* Popover */
+  --popover: hsl(300 60% 25%);
+  --popover-foreground: hsl(180 100% 50%);
+
+  /* Primary - Hot neon pink */
+  --primary: hsl(320 100% 55%);
+  --primary-foreground: hsl(280 50% 15%);
+
+  /* Secondary - Dark magenta variant */
+  --secondary: hsl(300 70% 35%);
+  --secondary-foreground: hsl(180 100% 50%);
+
+  /* Muted - Purple with glow */
+  --muted: hsl(300 50% 40%);
+  --muted-foreground: hsl(180 100% 50%);
+
+  /* Accent - Electric lime green */
+  --accent: hsl(90 100% 50%);
+  --accent-foreground: hsl(280 50% 15%);
+
+  /* Destructive - Hot orange */
+  --destructive: hsl(15 100% 55%);
+  --destructive-foreground: hsl(280 50% 15%);
+
+  /* Success - Neon cyan */
+  --success: hsl(180 100% 45%);
+  --success-foreground: hsl(280 50% 15%);
+
+  /* Warning - Electric yellow */
+  --warning: hsl(45 100% 50%);
+  --warning-foreground: hsl(280 50% 15%);
+
+  /* Borders - Neon magenta */
+  --border: hsl(300 100% 60%);
+  --input: hsl(300 60% 30%);
+  --ring: hsl(320 100% 55%);
+
+  /* Chart Colors - Rainbow chaos */
+  --chart-1: hsl(320 100% 55%);
+  --chart-2: hsl(180 100% 50%);
+  --chart-3: hsl(45 100% 50%);
+  --chart-4: hsl(90 100% 50%);
+  --chart-5: hsl(15 100% 55%);
+
+  /* Sidebar */
+  --sidebar: hsl(280 60% 20%);
+  --sidebar-foreground: hsl(180 100% 50%);
+  --sidebar-primary: hsl(320 100% 55%);
+  --sidebar-primary-foreground: hsl(280 50% 15%);
+  --sidebar-accent: hsl(90 100% 50%);
+  --sidebar-accent-foreground: hsl(280 50% 15%);
+  --sidebar-border: hsl(300 100% 60%);
+  --sidebar-ring: hsl(320 100% 55%);
+
+  /* Font - Chaotic fun mix */
+  --font-sans: 'Fredoka', 'Comic Sans MS', 'Poppins', sans-serif;
+}
+
+html.synesthesia body {
+  background-color: var(--background);
+  background-image:
+    linear-gradient(135deg, hsl(280 50% 15%) 0%, hsl(300 60% 25%) 25%, hsl(280 50% 15%) 50%, hsl(290 55% 20%) 75%, hsl(280 50% 15%) 100%);
+  background-size: 400% 400%;
+  animation: background-shift 8s ease infinite, jitter 0.5s ease-in-out infinite;
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+html.synesthesia header {
+  font-family: 'Comic Sans MS', 'Fredoka', 'Poppins', sans-serif;
+  animation: glitch 0.8s ease-in-out infinite, rainbow-shift 4s ease-in-out infinite;
+  text-shadow: 
+    -2px -2px 0 hsl(320 100% 55%),
+    2px -2px 0 hsl(180 100% 50%),
+    -2px 2px 0 hsl(45 100% 50%),
+    2px 2px 0 hsl(90 100% 50%);
+  border-bottom: 4px dashed hsl(300 100% 60%);
+  box-shadow: 
+    0 0 20px hsl(320 100% 55% / 0.6),
+    0 0 40px hsl(180 100% 50% / 0.4),
+    inset 0 0 20px hsl(45 100% 50% / 0.2);
+  background: linear-gradient(90deg, hsl(280 50% 15%), hsl(300 60% 25%), hsl(280 50% 15%));
+  background-size: 200% 100%;
+  animation: background-shift 6s ease infinite;
+}
+
+html.synesthesia header a,
+html.synesthesia header button {
+  color: hsl(180 100% 50%);
+}
+
+html.synesthesia .card {
+  background: linear-gradient(135deg, hsl(300 60% 25%) 0%, hsl(290 50% 30%) 100%);
+  border: 3px dashed hsl(300 100% 60%);
+  border-radius: var(--radius);
+  box-shadow: 
+    0 0 10px hsl(320 100% 55% / 0.5),
+    0 0 20px hsl(180 100% 50% / 0.3),
+    0 0 30px hsl(90 100% 50% / 0.2),
+    inset 0 0 15px hsl(45 100% 50% / 0.1);
+  animation: pulse-neon 2s ease-in-out infinite;
+}
+
+html.synesthesia .card-hover {
+  background: linear-gradient(135deg, hsl(300 60% 25%) 0%, hsl(290 50% 30%) 100%);
+  border: 3px dashed hsl(300 100% 60%);
+  border-radius: var(--radius);
+  box-shadow: 
+    0 0 10px hsl(320 100% 55% / 0.5),
+    0 0 20px hsl(180 100% 50% / 0.3),
+    0 0 30px hsl(90 100% 50% / 0.2),
+    inset 0 0 15px hsl(45 100% 50% / 0.1);
+  animation: pulse-neon 2s ease-in-out infinite;
+  transition: all 0.2s ease;
+}
+
+html.synesthesia .card-hover:hover {
+  box-shadow: 
+    0 0 20px hsl(320 100% 55% / 0.8),
+    0 0 40px hsl(180 100% 50% / 0.6),
+    0 0 60px hsl(90 100% 50% / 0.4),
+    inset 0 0 20px hsl(45 100% 50% / 0.2);
+  transform: scale(1.05);
+  animation: pulse-neon 1s ease-in-out infinite;
+}
+
+html.synesthesia .btn-primary {
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  box-shadow: 
+    0 0 10px hsl(320 100% 55% / 0.8),
+    0 0 20px hsl(180 100% 50% / 0.5);
+  transition: all 0.2s ease;
+}
+
+html.synesthesia .btn-primary:hover {
+  background-color: hsl(320 100% 65%);
+  transform: scale(1.08) rotate(3deg);
+  animation: spin-wild 0.6s ease-in-out infinite;
+  box-shadow: 
+    0 0 20px hsl(320 100% 55% / 1),
+    0 0 40px hsl(180 100% 50% / 0.7),
+    0 0 60px hsl(90 100% 50% / 0.5);
+}
+
+html.synesthesia button {
+  transition: all 0.2s ease;
+}
+
+html.synesthesia button:hover {
+  animation: spin-wild 0.6s ease-in-out infinite, bounce-chaotic 0.4s ease-in-out infinite;
+  transform: scale(1.1);
+  box-shadow: 
+    0 0 15px hsl(320 100% 55% / 0.7),
+    0 0 25px hsl(180 100% 50% / 0.5);
+}
+
+html.synesthesia .input-base {
+  border: 2px solid hsl(300 100% 60%);
+  background-color: hsl(300 60% 20%);
+  color: var(--foreground);
+  animation: rainbow-shift 3s ease-in-out infinite;
+  transition: all 0.2s ease;
+}
+
+html.synesthesia .input-base::placeholder {
+  color: hsl(180 100% 50% / 0.5);
+}
+
+html.synesthesia .input-base:focus {
+  outline: none;
+  border: 2px solid hsl(320 100% 55%);
+  box-shadow: 
+    0 0 0 2px hsl(300 60% 25%),
+    0 0 15px hsl(320 100% 55% / 0.8),
+    0 0 30px hsl(180 100% 50% / 0.5);
+  animation: glitch 0.3s ease-in-out;
+}
+
+html.synesthesia a {
+  color: hsl(180 100% 50%);
+  text-decoration: underline wavy hsl(90 100% 50%);
+  transition: all 0.2s ease;
+}
+
+html.synesthesia a:hover {
+  color: hsl(45 100% 50%);
+  animation: bounce-chaotic 0.4s ease-in-out, spin-wild 1s ease-in-out;
+  text-shadow: 0 0 10px hsl(320 100% 55%);
+}
+
+html.synesthesia .badge {
+  background: linear-gradient(135deg, hsl(320 100% 55%), hsl(180 100% 50%));
+  color: hsl(280 50% 15%);
+  border: 2px solid hsl(90 100% 50%);
+  animation: pulse-neon 1.5s ease-in-out infinite, rainbow-shift 3s ease-in-out infinite;
+  font-weight: 700;
+}
+
+html.synesthesia h1,
+html.synesthesia h2,
+html.synesthesia h3 {
+  animation: glitch 1s ease-in-out infinite;
+  text-shadow:
+    -2px -2px 0 hsl(320 100% 55%),
+    2px -2px 0 hsl(180 100% 50%),
+    -2px 2px 0 hsl(45 100% 50%),
+    2px 2px 0 hsl(90 100% 50%),
+    -4px -4px 8px hsl(15 100% 55%);
+  color: hsl(45 100% 50%);
+}
+
+html.synesthesia .table-header {
+  background-color: hsl(300 60% 30%);
+  color: hsl(180 100% 50%);
+  border-bottom: 2px solid hsl(300 100% 60%);
+  text-shadow: 0 0 5px hsl(320 100% 55%);
+}
+
+html.synesthesia .table-row {
+  border-bottom: 2px dashed hsl(300 100% 60% / 0.5);
+  background-color: hsl(300 60% 25%);
+  transition: all 0.2s ease;
+}
+
+html.synesthesia .table-row:hover {
+  background-color: hsl(300 60% 35%);
+  box-shadow: 0 0 15px hsl(320 100% 55% / 0.4);
+}
+
+html.synesthesia .focus-ring:focus {
+  outline: none;
+  box-shadow: 
+    0 0 0 2px var(--background),
+    0 0 0 4px hsl(320 100% 55%),
+    0 0 15px hsl(180 100% 50%),
+    0 0 30px hsl(90 100% 50%);
+}
+
+/* Accessibility: Reduce motion respects user preference */
+@media (prefers-reduced-motion: reduce) {
+  html.synesthesia * {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  html.synesthesia body {
+    background-image: linear-gradient(135deg, hsl(280 50% 15%) 0%, hsl(300 60% 25%) 100%);
+    background-size: 100% 100%;
+  }
+
+  html.synesthesia header {
+    text-shadow: 
+      -2px -2px 0 hsl(320 100% 55%),
+      2px -2px 0 hsl(180 100% 50%),
+      -2px 2px 0 hsl(45 100% 50%),
+      2px 2px 0 hsl(90 100% 50%);
+  }
+
+  html.synesthesia .card,
+  html.synesthesia .card-hover {
+    box-shadow: 
+      0 0 10px hsl(320 100% 55% / 0.5),
+      0 0 20px hsl(180 100% 50% / 0.3),
+      0 0 30px hsl(90 100% 50% / 0.2),
+      inset 0 0 15px hsl(45 100% 50% / 0.1);
+  }
+
+  html.synesthesia .card-hover:hover {
+    transform: none;
+    box-shadow: 
+      0 0 10px hsl(320 100% 55% / 0.5),
+      0 0 20px hsl(180 100% 50% / 0.3),
+      0 0 30px hsl(90 100% 50% / 0.2),
+      inset 0 0 15px hsl(45 100% 50% / 0.1);
+  }
+
+  html.synesthesia .btn-primary:hover {
+    transform: none;
+    background-color: var(--primary);
+    box-shadow: 
+      0 0 10px hsl(320 100% 55% / 0.8),
+      0 0 20px hsl(180 100% 50% / 0.5);
+  }
+
+  html.synesthesia button:hover {
+    transform: none;
+  }
+
+  html.synesthesia a:hover {
+    text-shadow: none;
+  }
+
+  html.synesthesia h1,
+  html.synesthesia h2,
+  html.synesthesia h3 {
+    text-shadow:
+      -2px -2px 0 hsl(320 100% 55%),
+      2px -2px 0 hsl(180 100% 50%),
+      -2px 2px 0 hsl(45 100% 50%),
+      2px 2px 0 hsl(90 100% 50%),
+      -4px -4px 8px hsl(15 100% 55%);
+  }
+}

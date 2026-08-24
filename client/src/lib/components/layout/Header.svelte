@@ -1,13 +1,15 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { Users, Stethoscope, Calendar, Home, Menu, X } from 'lucide-svelte';
+	import { Users, Stethoscope, Calendar, Home, Menu, X, PawPrint } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
+	import ThemeSwitcher from '$lib/components/ThemeSwitcher.svelte';
 
 	let mobileMenuOpen = $state(false);
 
 	const navItems = [
 		{ href: '/', label: 'Home', icon: Home },
 		{ href: '/owners', label: 'Owners', icon: Users },
+		{ href: '/pets', label: 'Pets', icon: PawPrint },
 		{ href: '/vets', label: 'Veterinarians', icon: Stethoscope },
 		{ href: '/visits', label: 'Visits', icon: Calendar }
 	];
@@ -48,20 +50,26 @@
 				{/each}
 			</nav>
 
-			<!-- Mobile Menu Button -->
-			<Button
-				variant="ghost"
-				size="icon"
-				class="md:hidden"
-				onclick={() => (mobileMenuOpen = !mobileMenuOpen)}
-				aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
-			>
-				{#if mobileMenuOpen}
-					<X class="h-5 w-5" />
-				{:else}
-					<Menu class="h-5 w-5" />
-				{/if}
-			</Button>
+			<!-- Right Side Actions -->
+			<div class="flex items-center gap-2">
+				<!-- Theme Switcher -->
+				<ThemeSwitcher />
+
+				<!-- Mobile Menu Button -->
+				<Button
+					variant="ghost"
+					size="icon"
+					class="md:hidden"
+					onclick={() => (mobileMenuOpen = !mobileMenuOpen)}
+					aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
+				>
+					{#if mobileMenuOpen}
+						<X class="h-5 w-5" />
+					{:else}
+						<Menu class="h-5 w-5" />
+					{/if}
+				</Button>
+			</div>
 		</div>
 
 		<!-- Mobile Navigation -->
