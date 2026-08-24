@@ -8,6 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- **Synesthesia Theme**: New chaos theme with neon colors, aggressive animations, and glitch effects
+  - 8 new keyframe animations: glitch, bounce-chaotic, spin-wild, pulse-neon, skew-rotate, rainbow-shift, jitter, background-shift
+  - 18 CSS variables for neon color palette (deep purple backgrounds, acid cyan foregrounds, electric lime/pink/orange accents)
+  - 21 element-specific styles for full theme integration (header, cards, buttons, inputs, badges, headings, tables)
+  - Full accessibility support with prefers-reduced-motion fallback for reduced animation users
+  - Theme persists via localStorage
 - **Visit-Vet Association**: Link veterinarians to individual visit records for better tracking
 - **Pet Health Metrics**: Track weight, vaccination dates, allergies, dietary restrictions, and medical notes
 - **Global Pet Creation**: Create pets from `/pets/new` route with owner selection
@@ -29,6 +35,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Backend**: 3 Liquibase migrations added for new database columns
 - **API**: RESTful endpoints for global pet creation and enhanced visit management
 - **Frontend**: 7 component updates for health metrics display and responsive improvements
+- **Frontend**: Theme switcher component with localStorage persistence and keyboard-accessible dropdown
+- **CSS**: 370+ lines of theme-specific styling for Synesthesia theme
 - **Testing**: 322 backend tests passing, 0 TypeScript errors in frontend
 - **Database**: H2 in-memory database auto-migrations, backward compatible schema changes
 
