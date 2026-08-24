@@ -126,6 +126,17 @@ public class PetService {
     }
 
     /**
+     * Searches for pets by name (case-insensitive, partial match).
+     *
+     * @param name the search term to match against pet names
+     * @return list of pets whose name contains the search term
+     */
+    @Transactional(readOnly = true)
+    public List<Pet> searchByName(final String name) {
+        return petRepository.findByNameContainsIgnoreCase(name);
+    }
+
+    /**
      * Deletes a pet by its unique identifier.
      *
      * @param petId the pet's unique identifier

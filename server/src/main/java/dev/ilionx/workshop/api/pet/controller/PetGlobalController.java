@@ -7,9 +7,14 @@ import dev.ilionx.workshop.api.pet.model.request.UpdatePetRequest;
 import dev.ilionx.workshop.api.pet.model.response.PetResponse;
 import dev.ilionx.workshop.api.pet.service.PetService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -38,15 +43,25 @@ public class PetGlobalController {
 
     @ResponseStatus(OK)
     @Operation(
-        summary = "Get all pets",
-        description = "Returns a list of all pets"
+        summary = "Get all pets or search by name",
+        description = "Returns all pets, or filters by name if search parameter is provided (case-insensitive)"
     )
     @GetMapping(
         path = PETS,
         produces = APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<List<PetResponse>> getAllPets() {
-        final List<Pet> pets = petService.findAll();
+    public ResponseEntity<List<PetResponse>> searchPets(
+        @Parameter(
+            description = "Search term to filter pets by name (case-insensitive, partial match)",
+            required = false,
+            example = "Buddy"
+        )
+        @RequestParam(
+            required = false,
+            defaultValue = ""
+        ) final String name
+    ) {
+        final List<Pet> pets = name.isEmpty() ? petService.findAll() : petService.searchByName(name);
         return ResponseEntity.status(OK).body(petMapper.toResponseList(pets));
     }
 
@@ -66,8 +81,24 @@ public class PetGlobalController {
 
     @ResponseStatus(CREATED)
     @Operation(
-        summary = "Create pet",
-        description = "Creates a new pet"
+        summary = "Create pet globally",
+        description = "Creates a new pet by providing owner ID in request body. The ownerId field is required."
+    )
+    @ApiResponse(
+        responseCode = "201",
+        description = "Pet created successfully",
+        content = @Content(
+            mediaType = APPLICATION_JSON_VALUE,
+            schema = @Schema(implementation = PetResponse.class)
+        )
+    )
+    @ApiResponse(
+        responseCode = "400",
+        description = "Invalid request - missing or null ownerId field"
+    )
+    @ApiResponse(
+        responseCode = "404",
+        description = "Owner not found with provided ownerId"
     )
     @PostMapping(
         path = PETS,
@@ -76,7 +107,9 @@ public class PetGlobalController {
     )
     public ResponseEntity<PetResponse> createPet(@RequestBody final CreatePetRequest request) {
         final Pet pet = petService.create(request.getOwnerId(), request);
-        return ResponseEntity.status(CREATED).body(petMapper.toResponse(pet));
+        final PetResponse response = petMapper.toResponse(pet);
+        return ResponseEntity.created(URI.create(PET_BY_ID.replace("{id}", pet.getId().toString())))
+            .body(response);
     }
 
     @ResponseStatus(OK)
