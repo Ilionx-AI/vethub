@@ -1,0 +1,20 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd"
+                   logicalFilePath="202508241400-ADD-vet-to-visits.xml">
+
+    <changeSet id="202508241400-ADD-vet-to-visits-1" author="ronald.van.butselaar">
+        <comment>Adding vet_id foreign key column to visits table to track which veterinarian performed each visit.</comment>
+        <sql>
+            ALTER TABLE visits
+            ADD COLUMN vet_id INTEGER NOT NULL DEFAULT 1;
+
+            ALTER TABLE visits
+            ADD CONSTRAINT fk_visits_vet_id
+            FOREIGN KEY (vet_id) REFERENCES vets (id);
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

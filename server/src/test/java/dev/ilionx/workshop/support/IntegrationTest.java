@@ -96,6 +96,11 @@ public abstract class IntegrationTest extends WebMvcConfigurator {
         visit.setDate(VISIT_DATE);
         visit.setDescription(VISIT_DESCRIPTION);
         visit.setPet(pet);
+        // Use first vet from seed data (ID 1 - James Carter)
+        visit.setVet(
+            vetRepository.findById(1)
+                .orElseThrow(() -> new RuntimeException("Vet with ID 1 not found in seed data"))
+        );
         return visitRepository.save(visit);
     }
 
@@ -163,6 +168,7 @@ public abstract class IntegrationTest extends WebMvcConfigurator {
         final CreateVisitRequest request = new CreateVisitRequest();
         request.setDate(LocalDate.of(2023, 1, 1));
         request.setDescription("Rabies shot");
+        request.setVetId(1);
         return request;
     }
 
@@ -176,6 +182,7 @@ public abstract class IntegrationTest extends WebMvcConfigurator {
         final UpdateVisitRequest request = new UpdateVisitRequest();
         request.setDate(LocalDate.of(2023, 6, 15));
         request.setDescription("Follow-up checkup");
+        request.setVetId(1);
         return request;
     }
 

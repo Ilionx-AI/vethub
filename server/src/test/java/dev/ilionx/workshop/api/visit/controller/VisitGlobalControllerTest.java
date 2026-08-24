@@ -87,7 +87,8 @@ class VisitGlobalControllerTest extends IntegrationTest {
             .andExpect(jsonPath("$.id", is(equalTo(visit.getId()))))
             .andExpect(jsonPath("$.date", is(notNullValue())))
             .andExpect(jsonPath("$.description", is(equalTo(VISIT_DESCRIPTION))))
-            .andExpect(jsonPath("$.petId", is(equalTo(pet.getId()))));
+            .andExpect(jsonPath("$.petId", is(equalTo(pet.getId()))))
+            .andExpect(jsonPath("$.vet", is(notNullValue())));
     }
 
     @Test
@@ -127,6 +128,7 @@ class VisitGlobalControllerTest extends IntegrationTest {
             .andExpect(jsonPath("$.date", is(notNullValue())))
             .andExpect(jsonPath("$.description", is(equalTo(VISIT_DESCRIPTION))))
             .andExpect(jsonPath("$.petId", is(equalTo(pet.getId()))))
+            .andExpect(jsonPath("$.vet", is(notNullValue())))
             .andReturn()
             .getResponse()
             .getContentAsString();

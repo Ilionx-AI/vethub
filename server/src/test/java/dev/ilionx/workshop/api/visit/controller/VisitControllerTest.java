@@ -56,7 +56,8 @@ class VisitControllerTest extends IntegrationTest {
             .andExpect(jsonPath("$[0].id", is(equalTo(savedVisit.getId()))))
             .andExpect(jsonPath("$[0].date", is(equalTo(VISIT_DATE.toString()))))
             .andExpect(jsonPath("$[0].description", is(equalTo(VISIT_DESCRIPTION))))
-            .andExpect(jsonPath("$[0].petId", is(equalTo(savedPet.getId()))));
+            .andExpect(jsonPath("$[0].petId", is(equalTo(savedPet.getId()))))
+            .andExpect(jsonPath("$[0].vet", is(notNullValue())));
     }
 
     @Test
@@ -116,7 +117,7 @@ class VisitControllerTest extends IntegrationTest {
         final CreateVisitRequest request = aCreateVisitRequest();
 
         // When: Creating the visit via POST
-        // Then: HTTP 201 Created should be returned with visit response including id, date, description, and petId
+        // Then: HTTP 201 Created should be returned with visit response including id, date, description, petId, and vet
         mockMvc.perform(
             post(PET_VISITS, savedOwner.getId(), savedPet.getId())
                 .contentType(MediaType.APPLICATION_JSON)
@@ -126,7 +127,9 @@ class VisitControllerTest extends IntegrationTest {
             .andExpect(jsonPath("$.id", is(notNullValue())))
             .andExpect(jsonPath("$.date", is(equalTo(VISIT_DATE.toString()))))
             .andExpect(jsonPath("$.description", is(equalTo(VISIT_DESCRIPTION))))
-            .andExpect(jsonPath("$.petId", is(equalTo(savedPet.getId()))));
+            .andExpect(jsonPath("$.petId", is(equalTo(savedPet.getId()))))
+            .andExpect(jsonPath("$.vet", is(notNullValue())))
+            .andExpect(jsonPath("$.vet.id", is(notNullValue())));
     }
 
     @Test
@@ -188,7 +191,8 @@ class VisitControllerTest extends IntegrationTest {
             .andExpect(jsonPath("$.id", is(equalTo(savedVisit.getId()))))
             .andExpect(jsonPath("$.date", is(equalTo(VISIT_DATE.toString()))))
             .andExpect(jsonPath("$.description", is(equalTo(VISIT_DESCRIPTION))))
-            .andExpect(jsonPath("$.petId", is(equalTo(savedPet.getId()))));
+            .andExpect(jsonPath("$.petId", is(equalTo(savedPet.getId()))))
+            .andExpect(jsonPath("$.vet", is(notNullValue())));
     }
 
     @Test
