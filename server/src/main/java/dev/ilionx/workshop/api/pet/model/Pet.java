@@ -20,6 +20,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Positive;
 
 /**
  * Entity representing a pet.
@@ -41,8 +43,7 @@ public class Pet {
     )
     private String name;
 
-    // BUG: No @Past validation - future birth dates are allowed
-    // Students should add @Past
+    @Past
     @Column(
         name = "birth_date",
         nullable = false
@@ -69,5 +70,40 @@ public class Pet {
         fetch = FetchType.EAGER
     )
     private List<Visit> visits = new ArrayList<>();
+
+    @Positive
+    @Column(
+        name = "weight",
+        nullable = true,
+        columnDefinition = "DECIMAL(5,2)"
+    )
+    private Double weight;
+
+    @Column(
+        name = "last_vaccine_date",
+        nullable = true
+    )
+    private LocalDate lastVaccineDate;
+
+    @Column(
+        name = "allergies",
+        nullable = true,
+        length = 500
+    )
+    private String allergies;
+
+    @Column(
+        name = "dietary_restrictions",
+        nullable = true,
+        length = 500
+    )
+    private String dietaryRestrictions;
+
+    @Column(
+        name = "medical_notes",
+        nullable = true,
+        columnDefinition = "CLOB"
+    )
+    private String medicalNotes;
 
 }

@@ -16,6 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 /**
  * Entity representing a pet owner.
@@ -31,16 +32,14 @@ public class Owner {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    // BUG: No @NotBlank validation - empty first names are allowed
-    // Students should add @NotBlank
+    @NotBlank
     @Column(
         name = "first_name",
         nullable = false
     )
     private String firstName;
 
-    // BUG: No @NotBlank validation - empty last names are allowed
-    // Students should add @NotBlank
+    @NotBlank
     @Column(
         name = "last_name",
         nullable = false

@@ -1,6 +1,7 @@
 package dev.ilionx.workshop.api.visit.model;
 
 import dev.ilionx.workshop.api.pet.model.Pet;
+import dev.ilionx.workshop.api.vet.model.Vet;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 
 /**
  * Entity representing a veterinary visit for a pet.
@@ -35,8 +37,7 @@ public class Visit {
     )
     private LocalDate date;
 
-    // BUG: No @NotBlank validation - blank descriptions are allowed
-    // Students should add @NotBlank
+    @NotBlank
     @Column(name = "description")
     private String description;
 
@@ -46,5 +47,12 @@ public class Visit {
         nullable = false
     )
     private Pet pet;
+
+    @ManyToOne
+    @JoinColumn(
+        name = "vet_id",
+        nullable = true
+    )
+    private Vet vet;
 
 }
