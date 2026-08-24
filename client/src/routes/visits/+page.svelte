@@ -1,15 +1,20 @@
 <script lang="ts">
 	import { getVisits } from '$lib/api/visit/VisitController';
-	import type { VisitResponse } from '$lib/api/models';
+	import { getPetById } from '$lib/api/pet/PetController';
+	import type { VisitResponse, PetResponse } from '$lib/api/models';
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 	import * as Table from '$lib/components/ui/table';
-	import { Calendar, Search, Loader2, ExternalLink } from 'lucide-svelte';
+	import { PetDetailModal } from '$lib/components/pets';
+	import { Calendar, Search, Loader2, ExternalLink, Stethoscope } from 'lucide-svelte';
 	import { toast } from 'svelte-sonner';
 
 	let visits = $state<VisitResponse[]>([]);
+	let petCache = $state<Record<number, PetResponse>>({});
 	let loading = $state(true);
 	let searchQuery = $state('');
+	let selectedPetId = $state<number | null>(null);
+	let isModalOpen = $state(false);
 
 	const filteredVisits = $derived(
 		visits.filter(
@@ -31,8 +36,57 @@
 		}
 	}
 
+	async function getPetNameForVisit(petId: number): Promise<string> {
+		// Check cache first
+		if (petCache[petId]) {
+			return petCache[petId].name;
+		}
+
+		try {
+			const pet = await getPetById(petId);
+			petCache[petId] = pet;
+			return pet.name;
+		} catch (e) {
+			console.error('Error loading pet:', e);
+			return `Pet #${petId}`;
+		}
+	}
+
+	// Pre-load pet names for all visits
+	async function loadPetNames() {
+		const petIds = [...new Set(visits.map((v) => v.petId))];
+		for (const petId of petIds) {
+			await getPetNameForVisit(petId);
+		}
+	}
+
+	function formatDate(dateStr: string): string {
+		const date = new Date(dateStr);
+		return date.toLocaleDateString('en-US', {
+			year: 'numeric',
+			month: 'short',
+			day: 'numeric'
+		});
+	}
+
+	function openPetDetails(petId: number) {
+		selectedPetId = petId;
+		isModalOpen = true;
+	}
+
+	function closePetDetails() {
+		isModalOpen = false;
+		selectedPetId = null;
+	}
+
 	$effect(() => {
 		loadVisits();
+	});
+
+	$effect(() => {
+		if (visits.length > 0) {
+			loadPetNames();
+		}
 	});
 </script>
 
@@ -44,7 +98,7 @@
 	<!-- Header -->
 	<div class="mb-8">
 		<div class="flex items-center gap-3 mb-2">
-			<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+			<div class="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 flex-shrink-0">
 				<Calendar class="h-5 w-5 text-primary" />
 			</div>
 			<h1 class="text-3xl font-bold text-foreground">Visits</h1>
@@ -54,8 +108,8 @@
 
 	<!-- Search -->
 	<div class="mb-6">
-		<div class="relative max-w-md">
-			<Search class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+		<div class="relative w-full sm:max-w-md">
+			<Search class="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground flex-shrink-0" />
 			<Input
 				type="text"
 				placeholder="Search by description or date..."
@@ -79,28 +133,37 @@
 			</p>
 		</div>
 	{:else}
-		<div class="rounded-lg border bg-card">
+		<!-- Desktop Table View (md and up) -->
+		<div class="hidden md:block rounded-lg border bg-card overflow-x-auto">
 			<Table.Root>
 				<Table.Header>
 					<Table.Row>
-						<Table.Head>Date</Table.Head>
+						<Table.Head class="w-[120px] sm:w-auto">Date</Table.Head>
+						<Table.Head>Pet Name</Table.Head>
 						<Table.Head>Description</Table.Head>
-						<Table.Head>Pet ID</Table.Head>
-						<Table.Head class="w-[100px]">Actions</Table.Head>
+						<Table.Head class="w-[80px] text-center">Actions</Table.Head>
 					</Table.Row>
 				</Table.Header>
 				<Table.Body>
 					{#each filteredVisits as visit (visit.id)}
-						<Table.Row>
-							<Table.Cell class="font-medium">
-								{new Date(visit.date).toLocaleDateString()}
+						<Table.Row class="hover:bg-muted/50">
+							<Table.Cell class="font-medium text-sm">
+								{formatDate(visit.date)}
 							</Table.Cell>
-							<Table.Cell>{visit.description}</Table.Cell>
-							<Table.Cell>
-								<span class="text-muted-foreground">Pet #{visit.petId}</span>
+							<Table.Cell class="text-sm">
+								{petCache[visit.petId]?.name || `Pet #${visit.petId}`}
 							</Table.Cell>
-							<Table.Cell>
-								<Button variant="ghost" size="sm" disabled title="View pet details (coming soon)">
+							<Table.Cell class="text-sm">
+								<span class="line-clamp-2">{visit.description}</span>
+							</Table.Cell>
+							<Table.Cell class="text-center">
+								<Button
+									variant="ghost"
+									size="sm"
+									title="View pet details"
+									onclick={() => openPetDetails(visit.petId)}
+									class="hover:bg-accent"
+								>
 									<ExternalLink class="h-4 w-4" />
 								</Button>
 							</Table.Cell>
@@ -116,8 +179,52 @@
 			</Table.Root>
 		</div>
 
+		<!-- Mobile Card View (below md) -->
+		<div class="md:hidden space-y-4">
+			{#each filteredVisits as visit (visit.id)}
+				<div class="rounded-lg border bg-card p-4 space-y-3">
+					<div class="flex items-start justify-between gap-3">
+						<div class="flex-1 min-w-0">
+							<div class="flex items-center gap-2 mb-2">
+								<Stethoscope class="h-4 w-4 text-muted-foreground flex-shrink-0" />
+								<p class="font-medium text-sm text-foreground">
+									{petCache[visit.petId]?.name || `Pet #${visit.petId}`}
+								</p>
+							</div>
+							<p class="text-xs text-muted-foreground">
+								{formatDate(visit.date)}
+							</p>
+						</div>
+						<Button
+							variant="ghost"
+							size="sm"
+							title="View pet details"
+							onclick={() => openPetDetails(visit.petId)}
+							class="hover:bg-accent flex-shrink-0"
+						>
+							<ExternalLink class="h-4 w-4" />
+						</Button>
+					</div>
+					<p class="text-sm text-foreground break-words">
+						{visit.description}
+					</p>
+				</div>
+			{:else}
+				<div class="rounded-lg border border-dashed p-8 text-center">
+					<p class="text-sm text-muted-foreground">No visits match your search</p>
+				</div>
+			{/each}
+		</div>
+
 		<p class="mt-4 text-sm text-muted-foreground">
 			Showing {filteredVisits.length} of {visits.length} visits
 		</p>
 	{/if}
 </div>
+
+<!-- Pet Detail Modal -->
+<PetDetailModal
+	isOpen={isModalOpen}
+	petId={selectedPetId}
+	onClose={closePetDetails}
+/>
