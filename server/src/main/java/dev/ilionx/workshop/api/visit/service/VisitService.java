@@ -2,6 +2,8 @@ package dev.ilionx.workshop.api.visit.service;
 
 import dev.ilionx.workshop.api.pet.model.Pet;
 import dev.ilionx.workshop.api.pet.repository.PetRepository;
+import dev.ilionx.workshop.api.vet.model.Vet;
+import dev.ilionx.workshop.api.vet.repository.VetRepository;
 import dev.ilionx.workshop.api.visit.model.Visit;
 import dev.ilionx.workshop.api.visit.model.request.CreateVisitRequest;
 import dev.ilionx.workshop.api.visit.model.request.UpdateVisitRequest;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import static dev.ilionx.workshop.common.exception.ApiErrorCode.PET_NOT_FOUND;
+import static dev.ilionx.workshop.common.exception.ApiErrorCode.VET_NOT_FOUND;
 import static dev.ilionx.workshop.common.exception.ApiErrorCode.VISIT_NOT_FOUND;
 
 /**
@@ -26,6 +29,7 @@ public class VisitService {
 
     private final PetRepository petRepository;
     private final VisitRepository visitRepository;
+    private final VetRepository vetRepository;
 
     /**
      * Finds all visits for a specific pet.
@@ -52,10 +56,13 @@ public class VisitService {
         final Pet pet = petRepository.findById(petId)
             .orElseThrow(() -> new DataNotFoundException(PET_NOT_FOUND));
 
+        final Vet vet = fetchVetIfProvided(request.getVetId());
+
         final Visit visit = new Visit();
         visit.setDate(request.getDate());
         visit.setDescription(request.getDescription());
         visit.setPet(pet);
+        visit.setVet(vet);
 
         return visitRepository.save(visit);
     }
@@ -92,8 +99,11 @@ public class VisitService {
     @Transactional
     public Visit update(final Integer visitId, final UpdateVisitRequest request) {
         final Visit visit = findById(visitId);
+        final Vet vet = fetchVetIfProvided(request.getVetId());
+
         visit.setDate(request.getDate());
         visit.setDescription(request.getDescription());
+        visit.setVet(vet);
         return visitRepository.save(visit);
     }
 
@@ -107,5 +117,20 @@ public class VisitService {
         final Visit visit = findById(visitId);
         visit.getPet().getVisits().remove(visit);
         visitRepository.delete(visit);
+    }
+
+    /**
+     * Fetches a vet by ID if the ID is provided, otherwise returns null.
+     *
+     * @param vetId the vet ID (can be null)
+     * @return the vet if ID is provided and found, null otherwise
+     * @throws DataNotFoundException if vetId is provided but vet not found
+     */
+    private Vet fetchVetIfProvided(final Integer vetId) {
+        if (vetId == null) {
+            return null;
+        }
+        return vetRepository.findById(vetId)
+            .orElseThrow(() -> new DataNotFoundException(VET_NOT_FOUND));
     }
 }

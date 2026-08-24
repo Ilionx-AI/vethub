@@ -30,4 +30,11 @@ public class UpdateVisitRequest {
     )
     private String description;
 
+    @Schema(
+        description = "ID of the veterinarian performing the visit",
+        example = "1",
+        requiredMode = Schema.RequiredMode.NOT_REQUIRED
+    )
+    private Integer vetId;
+
 }
