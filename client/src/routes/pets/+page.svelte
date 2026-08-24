@@ -78,6 +78,9 @@
 				<p class="text-sm text-muted-foreground">View and manage patients</p>
 			</div>
 		</div>
+		<Button href="/pets/new" variant="default">
+			Add New Pet
+		</Button>
 	</div>
 
 	<!-- Search -->
